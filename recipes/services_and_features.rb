@@ -36,6 +36,12 @@ end
 
 
 
+powershell_script 'V-76871' do
+  code <<-EOH
+  Set-WebConfigurationProperty -filter system.applicationHost/applicationPools/applicationPoolDefaults/recycling/periodicRestart -name privateMemory -value #{node['iis']['privateMemory']} -PSPath "MACHINE/WEBROOT/APPHOST"
+  EOH
+end
+
 powershell_script 'V-76873' do
   code <<-EOH
   Set-WebConfigurationProperty -filter system.applicationHost/applicationPools/applicationPoolDefaults/recycling -name logEventOnRecycle -value 141 -PSPath "MACHINE/WEBROOT/APPHOST"
