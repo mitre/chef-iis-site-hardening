@@ -13,8 +13,11 @@ verifier:
   name: inspec
 
 platforms:
-  - name: ubuntu-16.04
-  - name: centos-7
+  - name: windows-2012r2
+    driver:
+      box: tas50/windows_2012r2
+      customize:
+        memory: 2048
 
 suites:
   - name: default
