@@ -36,6 +36,12 @@ end
 
 
 
+powershell_script 'V-76873' do
+  code <<-EOH
+  Set-WebConfigurationProperty -filter system.applicationHost/applicationPools/applicationPoolDefaults/recycling -name logEventOnRecycle -value 141 -PSPath "MACHINE/WEBROOT/APPHOST"
+  EOH
+end
+
 powershell_script 'V-76875' do
   code <<-EOH
   Set-WebConfigurationProperty -filter system.applicationHost/applicationPools/applicationPoolDefaults -name queueLength -value #{node['iis']['queueLength']} -PSPath "MACHINE/WEBROOT/APPHOST"
