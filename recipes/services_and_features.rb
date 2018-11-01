@@ -36,6 +36,12 @@ end
 
 
 
+powershell_script 'V-76875' do
+  code <<-EOH
+  Set-WebConfigurationProperty -filter system.applicationHost/applicationPools/applicationPoolDefaults -name queueLength -value #{node['iis']['queueLength']} -PSPath "MACHINE/WEBROOT/APPHOST"
+  EOH
+end
+
 powershell_script 'V-76877' do
   code <<-EOH
   Set-WebConfigurationProperty -filter system.applicationHost/applicationPools/applicationPoolDefaults/processModel -name pingingEnabled -value True -PSPath "MACHINE/WEBROOT/APPHOST"
