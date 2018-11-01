@@ -36,6 +36,12 @@ end
 
 
 
+powershell_script 'V-76877' do
+  code <<-EOH
+  Set-WebConfigurationProperty -filter system.applicationHost/applicationPools/applicationPoolDefaults/processModel -name pingingEnabled -value True -PSPath "MACHINE/WEBROOT/APPHOST"
+  EOH
+end
+
 powershell_script 'V-76879' do
   code <<-EOH
   Set-WebConfigurationProperty -filter system.applicationHost/applicationPools/applicationPoolDefaults/failure -name rapidFailProtection -value True -PSPath "MACHINE/WEBROOT/APPHOST"
