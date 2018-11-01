@@ -36,6 +36,12 @@ end
 
 
 
+powershell_script 'V-76867' do
+  code <<-EOH
+  Set-WebConfigurationProperty -filter system.applicationHost/applicationPools/applicationPoolDefaults/recycling/periodicRestart -name requests -value #{node['iis']['requestLimit']} -PSPath "MACHINE/WEBROOT/APPHOST"
+  EOH
+end
+
 powershell_script 'V-76869' do
   code <<-EOH
   Set-WebConfigurationProperty -filter system.applicationHost/applicationPools/applicationPoolDefaults/recycling/periodicRestart -name memory -value #{node['iis']['virtualMemoryLimit']} -PSPath "MACHINE/WEBROOT/APPHOST"
