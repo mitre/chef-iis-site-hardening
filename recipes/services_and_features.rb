@@ -58,6 +58,18 @@ powershell_script 'V-76823' do
   EOH
 end
 
+powershell_script 'V-76825' do
+  code <<-EOH
+  Set-WebConfigurationProperty -filter "system.webServer/security/requestFiltering" -name allowDoubleEscaping -value False -PSPath "MACHINE/WEBROOT/APPHOST"
+  EOH
+end
+
+powershell_script 'V-76827' do
+  code <<-EOH
+  Set-WebConfigurationProperty -filter "system.webServer/security/requestFiltering/fileExtensions" -name allowUnlisted -value False -PSPath "MACHINE/WEBROOT/APPHOST"
+  EOH
+end
+
 powershell_script 'V-76867' do
   code <<-EOH
   Set-WebConfigurationProperty -filter system.applicationHost/applicationPools/applicationPoolDefaults/recycling/periodicRestart -name requests -value #{node['iis']['requestLimit']} -PSPath "MACHINE/WEBROOT/APPHOST"
