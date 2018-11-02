@@ -94,6 +94,12 @@ powershell_script 'V-76837' do
   EOH
 end
 
+powershell_script 'V-76839' do
+  code <<-EOH
+  Set-WebConfigurationProperty -filter "system.applicationHost/applicationPools/applicationPoolDefaults/processModel/idleTimeout" -name TotalMinutes -value #{node['iis']['TotalMinutes']} -PSPath "MACHINE/WEBROOT/APPHOST"
+  EOH
+end
+
 powershell_script 'V-76867' do
   code <<-EOH
   Set-WebConfigurationProperty -filter system.applicationHost/applicationPools/applicationPoolDefaults/recycling/periodicRestart -name requests -value #{node['iis']['requestLimit']} -PSPath "MACHINE/WEBROOT/APPHOST"
