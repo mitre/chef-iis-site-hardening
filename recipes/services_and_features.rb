@@ -22,7 +22,7 @@ powershell_script 'V-76777' do
   EOH
 end
 
-powershell_script 'V-76779, V-76781, V-76809, V-76851' do
+powershell_script 'V-76779, V-76781, V-76809, V-76851, V-76861' do
   code <<-EOH
   Set-WebConfigurationProperty -filter "system.webServer/security/access" -name sslFlags -value 'Ssl,Ssl128,SslRequireCert' -PSPath "MACHINE/WEBROOT/APPHOST"
   EOH
@@ -149,6 +149,12 @@ end
 powershell_script 'V-76855' do
   code <<-EOH
   Set-WebConfigurationProperty -filter "system.webServer/asp/session" -name keepSessionIdSecure -value True -PSPath "MACHINE/WEBROOT/APPHOST"
+  EOH
+end
+
+powershell_script 'V-76859' do
+  code <<-EOH
+  Set-WebConfigurationProperty -filter "system.web/sessionState" -name compressionEnabled -value False -PSPath "MACHINE/WEBROOT/APPHOST"
   EOH
 end
 
