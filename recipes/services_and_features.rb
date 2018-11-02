@@ -70,6 +70,18 @@ powershell_script 'V-76827' do
   EOH
 end
 
+powershell_script 'V-76829' do
+  code <<-EOH
+  Set-WebConfigurationProperty -filter "system.webServer/directoryBrowse" -name enabled -value False -PSPath "MACHINE/WEBROOT/APPHOST"
+  EOH
+end
+
+powershell_script 'V-76831' do
+  code <<-EOH
+  Set-WebConfigurationProperty -filter "system.webServer/defaultDocument" -name enabled -value True -PSPath "MACHINE/WEBROOT/APPHOST"
+  EOH
+end
+
 powershell_script 'V-76867' do
   code <<-EOH
   Set-WebConfigurationProperty -filter system.applicationHost/applicationPools/applicationPoolDefaults/recycling/periodicRestart -name requests -value #{node['iis']['requestLimit']} -PSPath "MACHINE/WEBROOT/APPHOST"
