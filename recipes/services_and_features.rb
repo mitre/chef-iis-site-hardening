@@ -6,52 +6,57 @@
 
 powershell_script 'V-76773' do
   code <<-EOH
-  Set-WebConfigurationProperty -filter "system.applicationHost/sites/siteDefaults/limits" -name MaxConnections -value #{node['iis']['MaxConnections']}
+  Set-WebConfigurationProperty -filter "system.applicationHost/sites/siteDefaults/limits" -name MaxConnections -value #{node['iis']['MaxConnections']} -PSPath "MACHINE/WEBROOT/APPHOST"
   EOH
 end
 
 powershell_script 'V-76775, V-76813' do
   code <<-EOH
-  Set-WebConfigurationProperty -filter "system.web/sessionState" -name mode -value InProc
+  Set-WebConfigurationProperty -filter "system.web/sessionState" -name mode -value InProc -PSPath "MACHINE/WEBROOT/APPHOST"
   EOH
 end
 
 powershell_script 'V-76777' do
   code <<-EOH
-  Set-WebConfigurationProperty -filter "system.web/sessionState" -name cookieless -value UseCookies
+  Set-WebConfigurationProperty -filter "system.web/sessionState" -name cookieless -value UseCookies -PSPath "MACHINE/WEBROOT/APPHOST"
   EOH
 end
 
 powershell_script 'V-76779, V-76781, V-76809' do
   code <<-EOH
-  Set-WebConfigurationProperty -filter "system.webServer/security/access" -name sslFlags -value 'Ssl,SslRequireCert'
+  Set-WebConfigurationProperty -filter "system.webServer/security/access" -name sslFlags -value 'Ssl,SslRequireCert' -PSPath "MACHINE/WEBROOT/APPHOST"
   EOH
 end
 
 powershell_script 'V-76805' do
   code <<-EOH
-  Set-WebConfigurationProperty -filter "system.web/trust" -name level -value Full
+  Set-WebConfigurationProperty -filter "system.web/trust" -name level -value Full -PSPath "MACHINE/WEBROOT/APPHOST"
   EOH
 end
 
 powershell_script 'V-76817' do
   code <<-EOH
-  Set-WebConfigurationProperty -filter "system.webServer/security/requestFiltering/requestLimits" -name maxUrl -value #{node['iis']['maxUrl']}
+  Set-WebConfigurationProperty -filter "system.webServer/security/requestFiltering/requestLimits" -name maxUrl -value #{node['iis']['maxUrl']} -PSPath "MACHINE/WEBROOT/APPHOST"
   EOH
 end
 
 powershell_script 'V-76819' do
   code <<-EOH
-  Set-WebConfigurationProperty -filter "system.webServer/security/requestFiltering/requestLimits" -name maxAllowedContentLength -value #{node['iis']['maxAllowedContentLength']}
+  Set-WebConfigurationProperty -filter "system.webServer/security/requestFiltering/requestLimits" -name maxAllowedContentLength -value #{node['iis']['maxAllowedContentLength']} -PSPath "MACHINE/WEBROOT/APPHOST"
   EOH
 end
 
 powershell_script 'V-76821' do
   code <<-EOH
-  Set-WebConfigurationProperty -filter "system.webServer/security/requestFiltering/requestLimits" -name maxQueryString -value #{node['iis']['maxQueryString']}
+  Set-WebConfigurationProperty -filter "system.webServer/security/requestFiltering/requestLimits" -name maxQueryString -value #{node['iis']['maxQueryString']} -PSPath "MACHINE/WEBROOT/APPHOST"
   EOH
 end
 
+powershell_script 'V-76823' do
+  code <<-EOH
+  Set-WebConfigurationProperty -filter "system.webServer/security/requestFiltering" -name allowHighBitCharacters -value True -PSPath "MACHINE/WEBROOT/APPHOST"
+  EOH
+end
 
 powershell_script 'V-76867' do
   code <<-EOH
