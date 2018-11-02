@@ -22,9 +22,9 @@ powershell_script 'V-76777' do
   EOH
 end
 
-powershell_script 'V-76779, V-76781, V-76809' do
+powershell_script 'V-76779, V-76781, V-76809, V-76851' do
   code <<-EOH
-  Set-WebConfigurationProperty -filter "system.webServer/security/access" -name sslFlags -value 'Ssl,SslRequireCert' -PSPath "MACHINE/WEBROOT/APPHOST"
+  Set-WebConfigurationProperty -filter "system.webServer/security/access" -name sslFlags -value 'Ssl,Ssl128,SslRequireCert' -PSPath "MACHINE/WEBROOT/APPHOST"
   EOH
 end
 
@@ -143,6 +143,12 @@ powershell_script 'V-76845' do
   code <<-EOH
   Set-WebConfigurationProperty -filter "system.ApplicationHost/log/centralW3CLogFile" -name directory -value #{node['iis']['logDirectory']} -PSPath "MACHINE/WEBROOT/APPHOST"
   Set-WebConfigurationProperty -filter "system.ApplicationHost/log/centralW3CLogFile" -name period -value Daily -PSPath "MACHINE/WEBROOT/APPHOST"
+  EOH
+end
+
+powershell_script 'V-76855' do
+  code <<-EOH
+  Set-WebConfigurationProperty -filter "system.webServer/asp/session" -name keepSessionIdSecure -value True -PSPath "MACHINE/WEBROOT/APPHOST"
   EOH
 end
 
