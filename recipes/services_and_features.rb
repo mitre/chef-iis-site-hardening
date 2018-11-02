@@ -28,6 +28,39 @@ powershell_script 'V-76779, V-76781, V-76809' do
   EOH
 end
 
+powershell_script 'V-76783' do
+  code <<-EOH
+  Set-WebConfigurationProperty -Filter System.Applicationhost/Sites/SiteDefaults/logfile -Name LogExtFileFlags -Value "Date,Time,ClientIP,UserName,Method,UriQuery,HttpStatus,Referer"
+  EOH
+end
+
+powershell_script 'V-76785' do
+  code <<-EOH
+  Set-WebConfigurationProperty -pspath 'MACHINE/WEBROOT/APPHOST'  -filter "system.applicationHost/sites/site[@name='Default Web Site']/logFile" -name "logTargetW3C" -value "File,ETW"
+  EOH
+end
+
+powershell_script 'V-76789, V-76791' do
+  code <<-EOH
+  Set-WebConfigurationProperty -filter "system.applicationHost/sites/siteDefaults/logFile" -name logFormat -value W3C -PSPath "MACHINE/WEBROOT/APPHOST"
+  Add-WebConfigurationProperty -pspath 'MACHINE/WEBROOT/APPHOST'  -filter "system.applicationHost/sites/site[@name='Default Web Site']/logFile/customFields" -name "." -value @{logFieldName='Connection';sourceName='Connection';sourceType='RequestHeader'}
+  Add-WebConfigurationProperty -pspath 'MACHINE/WEBROOT/APPHOST'  -filter "system.applicationHost/sites/site[@name='Default Web Site']/logFile/customFields" -name "." -value @{logFieldName='Warning';sourceName='Warning';sourceType='RequestHeader'}
+  Add-WebConfigurationProperty -pspath 'MACHINE/WEBROOT/APPHOST'  -filter "system.applicationHost/sites/site[@name='Default Web Site']/logFile/customFields" -name "." -value @{logFieldName='HTTP_CONNECTION';sourceName='HTTP_CONNECTION';sourceType='ServerVariable'}
+  Add-WebConfigurationProperty -pspath 'MACHINE/WEBROOT/APPHOST'  -filter "system.applicationHost/sites/site[@name='Default Web Site']/logFile/customFields" -name "." -value @{logFieldName='User-Agent';sourceName='User-Agent';sourceType='RequestHeader'}
+  Add-WebConfigurationProperty -pspath 'MACHINE/WEBROOT/APPHOST'  -filter "system.applicationHost/sites/site[@name='Default Web Site']/logFile/customFields" -name "." -value @{logFieldName='Authorization';sourceName='Authorization';sourceType='RequestHeader'}
+  Add-WebConfigurationProperty -pspath 'MACHINE/WEBROOT/APPHOST'  -filter "system.applicationHost/sites/site[@name='Default Web Site']/logFile/customFields" -name "." -value @{logFieldName='Content-Type';sourceName='Content-Type';sourceType='ResponseHeader'}
+  EOH
+end
+
+powershell_script 'V-76797' do
+  code <<-EOH
+  Install-WindowsFeature -Name Web-Url-Auth
+  Set-WebConfigurationProperty -filter "system.webServer/security/authentication/anonymousAuthentication" -name enabled -value false -PSPath "MACHINE/WEBROOT/APPHOST"
+  Set-WebConfigurationProperty -filter "system.webServer/security/authentication/basicAuthentication" -name enabled -value true -PSPath "MACHINE/WEBROOT/APPHOST"
+  Set-WebConfigurationProperty -filter "system.webServer/security/authentication/basicAuthentication" -name defaultLogonDomain -value Administrator -PSPath "MACHINE/WEBROOT/APPHOST"
+  EOH
+end
+
 powershell_script 'V-76805' do
   code <<-EOH
   Set-WebConfigurationProperty -filter "system.web/trust" -name level -value Full -PSPath "MACHINE/WEBROOT/APPHOST"
@@ -103,6 +136,13 @@ end
 powershell_script 'V-76841' do
   code <<-EOH
   Set-WebConfigurationProperty -filter "system.web/sessionState/timeout" -name TotalMinutes -value #{node['iis']['ConnectionTimeoutTotalMinutes']} -PSPath "MACHINE/WEBROOT/APPHOST"
+  EOH
+end
+
+powershell_script 'V-76845' do
+  code <<-EOH
+  Set-WebConfigurationProperty -filter "system.ApplicationHost/log/centralW3CLogFile" -name directory -value #{node['iis']['logDirectory']} -PSPath "MACHINE/WEBROOT/APPHOST"
+  Set-WebConfigurationProperty -filter "system.ApplicationHost/log/centralW3CLogFile" -name period -value Daily -PSPath "MACHINE/WEBROOT/APPHOST"
   EOH
 end
 

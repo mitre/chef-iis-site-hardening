@@ -16,3 +16,4 @@ default['iis']['maxQueryString'] = '2048'
 default['iis']['IdleTimeoutTotalMinutes'] = '20'
 default['iis']['ConnectionTimeoutTotalMinutes'] = '20'
 
+default['iis']['logDirectory'] = '%SystemDrive%\inetpub\logs\LogFiles'
