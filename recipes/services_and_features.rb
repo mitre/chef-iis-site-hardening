@@ -82,6 +82,18 @@ powershell_script 'V-76831' do
   EOH
 end
 
+powershell_script 'V-76835' do
+  code <<-EOH
+  Set-WebConfigurationProperty -filter "system.webServer/httpErrors" -name errorMode -value DetailedLocalOnly -PSPath "MACHINE/WEBROOT/APPHOST"
+  EOH
+end
+
+powershell_script 'V-76837' do
+  code <<-EOH
+  Set-WebConfigurationProperty -filter "system.web/compilation" -name debug -value True -PSPath "MACHINE/WEBROOT/APPHOST"
+  EOH
+end
+
 powershell_script 'V-76867' do
   code <<-EOH
   Set-WebConfigurationProperty -filter system.applicationHost/applicationPools/applicationPoolDefaults/recycling/periodicRestart -name requests -value #{node['iis']['requestLimit']} -PSPath "MACHINE/WEBROOT/APPHOST"
