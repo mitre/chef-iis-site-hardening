@@ -96,7 +96,13 @@ end
 
 powershell_script 'V-76839' do
   code <<-EOH
-  Set-WebConfigurationProperty -filter "system.applicationHost/applicationPools/applicationPoolDefaults/processModel/idleTimeout" -name TotalMinutes -value #{node['iis']['TotalMinutes']} -PSPath "MACHINE/WEBROOT/APPHOST"
+  Set-WebConfigurationProperty -filter "system.applicationHost/applicationPools/applicationPoolDefaults/processModel/idleTimeout" -name TotalMinutes -value #{node['iis']['IdleTimeoutTotalMinutes']} -PSPath "MACHINE/WEBROOT/APPHOST"
+  EOH
+end
+
+powershell_script 'V-76841' do
+  code <<-EOH
+  Set-WebConfigurationProperty -filter "system.web/sessionState/timeout" -name TotalMinutes -value #{node['iis']['ConnectionTimeoutTotalMinutes']} -PSPath "MACHINE/WEBROOT/APPHOST"
   EOH
 end
 

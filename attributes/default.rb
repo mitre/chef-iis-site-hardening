@@ -13,6 +13,6 @@ default['iis']['MaxConnections'] = '4294967295'
 default['iis']['maxUrl'] = '4096'
 default['iis']['maxAllowedContentLength'] = '30000000'
 default['iis']['maxQueryString'] = '2048'
-default['iis']['TotalMinutes'] = '20'
-
+default['iis']['IdleTimeoutTotalMinutes'] = '20'
+default['iis']['ConnectionTimeoutTotalMinutes'] = '20'
 
