@@ -6,11 +6,11 @@
 
 powershell_script 'V-76773' do
   code <<-EOH
-  Set-WebConfigurationProperty -filter "system.applicationHost/sites/siteDefaults/limits" -name MaxConnections -value 4294967295
+  Set-WebConfigurationProperty -filter "system.applicationHost/sites/siteDefaults/limits" -name MaxConnections -value #{node['iis']['MaxConnections']}
   EOH
 end
 
-powershell_script 'V-76775' do
+powershell_script 'V-76775, V-76813' do
   code <<-EOH
   Set-WebConfigurationProperty -filter "system.web/sessionState" -name mode -value InProc
   EOH
@@ -34,6 +34,23 @@ powershell_script 'V-76805' do
   EOH
 end
 
+powershell_script 'V-76817' do
+  code <<-EOH
+  Set-WebConfigurationProperty -filter "system.webServer/security/requestFiltering/requestLimits" -name maxUrl -value #{node['iis']['maxUrl']}
+  EOH
+end
+
+powershell_script 'V-76819' do
+  code <<-EOH
+  Set-WebConfigurationProperty -filter "system.webServer/security/requestFiltering/requestLimits" -name maxAllowedContentLength -value #{node['iis']['maxAllowedContentLength']}
+  EOH
+end
+
+powershell_script 'V-76821' do
+  code <<-EOH
+  Set-WebConfigurationProperty -filter "system.webServer/security/requestFiltering/requestLimits" -name maxQueryString -value #{node['iis']['maxQueryString']}
+  EOH
+end
 
 
 powershell_script 'V-76867' do
